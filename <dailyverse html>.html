@@ -1,0 +1,95 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Daily Bible Verse</title>
+    <style>
+        body {
+            background-color: lightblue;
+            font-family: 'Comic Sans MS', cursive, sans-serif;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            height: 100vh;
+            text-align: center;
+            margin: 0;
+        }
+        .verse-container {
+            padding: 20px;
+            border-radius: 10px;
+            background: rgba(255, 255, 255, 0.8);
+        }
+    </style>
+</head>
+<body>
+    <div class="verse-container">
+        <h1>Daily Bible Verse</h1>
+        <p id="bible-verse"></p>
+    </div>
+    <script>
+        const verses = [
+            "For I know the plans I have for you,\" declares the Lord, \"plans to prosper you and not to harm you, plans to give you hope and a future. - Jeremiah 29:11",
+            "I can do all this through him who gives me strength. - Philippians 4:13",
+            "And we know that in all things God works for the good of those who love him, who have been called according to his purpose. - Romans 8:28",
+            "The Lord is my shepherd, I lack nothing. - Psalm 23:1",
+            "The Lord is my light and my salvation—whom shall I fear? The Lord is the stronghold of my life—of whom shall I be afraid? - Psalm 27:1",
+            "Trust in the Lord with all your heart and lean not on your own understanding; in all your ways submit to him, and he will make your paths straight. - Proverbs 3:5-6",
+            "Be strong and courageous. Do not be afraid; do not be discouraged, for the Lord your God will be with you wherever you go. - Joshua 1:9",
+            "You are my hiding place; you will protect me from trouble and surround me with songs of deliverance. - Psalm 32:7",
+            "Take delight in the Lord, and he will give you the desires of your heart. - Psalm 37:4",
+            "I waited patiently for the Lord; he turned to me and heard my cry. He lifted me out of the slimy pit, out of the mud and mire; he set my feet on a rock and gave me a firm place to stand. - Psalm 40:1-2",
+            "Cast your cares on the Lord and he will sustain you; he will never let the righteous be shaken. - Psalm 55:22",
+            "I will say of the Lord, ‘He is my refuge and my fortress, my God, in whom I trust.’ - Psalm 91:2",
+            "The Lord watches over you—the Lord is your shade at your right hand. - Psalm 121:5",
+            "When you pass through the waters, I will be with you; and when you pass through the rivers, they will not sweep over you. When you walk through the fire, you will not be burned; the flames will not set you ablaze. - Isaiah 43:2",
+            "Though the mountains be shaken and the hills be removed, yet my unfailing love for you will not be shaken nor my covenant of peace be removed,” says the Lord, who has compassion on you. - Isaiah 54:10",
+            "Call to me and I will answer you and tell you great and unsearchable things you do not know. - Jeremiah 33:3",
+            "But as for me, I watch in hope for the Lord, I wait for God my Savior; my God will hear me. - Micah 7:7",
+            "May the God of hope fill you with all joy and peace as you trust in him, so that you may overflow with hope by the power of the Holy Spirit. - Romans 15:13",
+            "No temptation has overtaken you except what is common to mankind. And God is faithful; he will not let you be tempted beyond what you can bear. But when you are tempted, he will also provide a way out so that you can endure it. - 1 Corinthians 10:13",
+            "But he said to me, ‘My grace is sufficient for you, for my power is made perfect in weakness.’ Therefore I will boast all the more gladly about my weaknesses, so that Christ’s power may rest on me. - 2 Corinthians 12:9",
+            "Now to him who is able to do immeasurably more than all we ask or imagine, according to his power that is at work within us. - Ephesians 3:20",
+            "Being confident of this, that he who began a good work in you will carry it on to completion until the day of Christ Jesus. - Philippians 1:6",
+            "Set your minds on things that are above, not on things that are on earth. - Colossians 3:2",
+            "May our Lord Jesus Christ himself and God our Father, who loved us and by his grace gave us eternal encouragement and good hope, encourage your hearts and strengthen you in every good deed and word. - 2 Thessalonians 2:16-17",
+            "Now faith is confidence in what we hope for and assurance about what we do not see. - Hebrews 11:1",
+            "Therefore, since we are surrounded by such a great cloud of witnesses, let us throw off everything that hinders and the sin that so easily entangles. And let us run with perseverance the race marked out for us, fixing our eyes on Jesus, the pioneer and perfecter of faith. - Hebrews 12:1-2",
+            "Blessed is the one who perseveres under trial because, having stood the test, that person will receive the crown of life that the Lord has promised to those who love him. - James 1:12",
+            "You, dear children, are from God and have overcome them, because the one who is in you is greater than the one who is in the world. - 1 John 4:4",
+            "Here I am! I stand at the door and knock. If anyone hears my voice and opens the door, I will come in and eat with that person, and they with me. - Revelation 3:20",
+            "The Lord will guide you always; he will satisfy your needs in a sun-scorched land and will strengthen your frame. You will be like a well-watered garden, like a spring whose waters never fail. - Isaiah 58:11",
+            "Look to the Lord and his strength; seek his face always. - 1 Chronicles 16:11",
+            "Commit your way to the Lord; trust in him and he will do this. - Psalm 37:5",
+            "Your word is a lamp for my feet, a light on my path. - Psalm 119:105",
+            "Do not forsake wisdom, and she will protect you; love her, and she will watch over you. The beginning of wisdom is this: Get wisdom. Though it cost all you have, get understanding. - Proverbs 4:6-7",
+            "Anxiety weighs down the heart, but a kind word cheers it up. - Proverbs 12:25",
+            "A cheerful heart is good medicine, but a crushed spirit dries up the bones. - Proverbs 17:22",
+            "There is a time for everything, and a season for every activity under the heavens. - Ecclesiastes 3:1",
+            "Because of the Lord’s great love we are not consumed, for his compassions never fail. They are new every morning; great is your faithfulness. - Lamentations 3:22-23",
+            "Let us acknowledge the Lord; let us press on to acknowledge him. As surely as the sun rises, he will appear; he will come to us like the winter rains, like the spring rains that water the earth. - Hosea 6:3",
+            "Rend your heart and not your garments. Return to the Lord your God, for he is gracious and compassionate, slow to anger and abounding in love, and he relents from sending calamity. - Joel 2:13",
+            "He has shown you, O mortal, what is good. And what does the Lord require of you? To act justly and to love mercy and to walk humbly with your God. - Micah 6:8",
+            "So he said to me, ‘This is the word of the Lord to Zerubbabel: ‘Not by might nor by power, but by my Spirit,’ says the Lord Almighty.’ - Zechariah 4:6",
+            "But seek first his kingdom and his righteousness, and all these things will be given to you as well. - Matthew 6:33",
+            "Ask and it will be given to you; seek and you will find; knock and the door will be opened to you. - Matthew 7:7",
+            "For no word from God will ever fail. - Luke 1:37",
+            "Do not be afraid, little flock, for your Father has been pleased to give you the kingdom. - Luke 12:32",
+            "The thief comes only to steal and kill and destroy; I have come that they may have life, and have it to the full. - John 10:10",
+            "But the fruit of the Spirit is love, joy, peace, forbearance, kindness, goodness, faithfulness, gentleness and self-control. Against such things there is no law. - Galatians 5:22-23",
+            "And my God will meet all your needs according to the riches of his glory in Christ Jesus. - Philippians 4:19",
+            "And God raised us up with Christ and seated us with him in the heavenly realms in Christ Jesus, - Ephesians 2:6",
+            "So do not fear, for I am with you; do not be dismayed, for I am your God. I will strengthen you and help you; I will uphold you with my righteous right hand. - Isaiah 41:10",
+            "He will cover you with his feathers, and under his wings you will find refuge; his faithfulness will be your shield and rampart. - Psalm 91:4",
+            "Let us not become weary in doing good, for at the proper time we will reap a harvest if we do not give up. - Galatians 6:9"
+        ];
+
+        function getRandomVerse() {
+            const randomIndex = Math.floor(Math.random() * verses.length);
+            return verses[randomIndex];
+        }
+
+        document.getElementById('bible-verse').textContent = getRandomVerse();
+    </script>
+</body>
+</html>
